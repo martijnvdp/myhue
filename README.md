@@ -1,8 +1,11 @@
 # myhue
-tTst go to interact with the api of the philips hue \
+Test go to interact with the api of the philips hue \ 
+and learning go \
+source: 
 https://github.com/amimof/huego
 
 environment vars \
+
 '''
 "HUEUSER":"someusername"
 "HUEIP":"1.1.1.1"
