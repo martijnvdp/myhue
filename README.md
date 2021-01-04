@@ -1,6 +1,7 @@
 # myhue
-Test go to interact with the api of the philips hue \ 
-and learning go \
+Test go to interact with the api of the philips hue 
+
+and learning go 
 source: 
 https://github.com/amimof/huego
 
