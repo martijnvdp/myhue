@@ -9,9 +9,7 @@ import (
 //ListAll lights
 func ListAll(token string, b *huego.Bridge) {
 
-	bridge := huego.New(b.Host, b.User)
-	l, err := bridge.GetLights()
-
+	l, err := b.GetLights()
 	if err != nil {
 		panic(err)
 	}
@@ -24,8 +22,6 @@ func ListAll(token string, b *huego.Bridge) {
 		fmt.Println("Bright level : ", lights.State.Bri)
 		fmt.Println("Reachable    : ", lights.State.Reachable)
 		fmt.Println("]")
-
 	}
 	fmt.Printf("Found %d lights", len(l))
-
 }
