@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 
@@ -8,10 +9,14 @@ import (
 )
 
 func main() {
+	l := flag.Int("light", 1, "an int")
+	a := flag.Bool("on", false, "a bool")
+	flag.Parse()
 	token, bridge := functions.ConnectHUE()
 	if os.Getenv("HUETOKEN") == "" {
 		fmt.Println("set ENV HUETOKEN=", token)
 	}
-	functions.SetLight(1, true, token, bridge)
 	functions.ListAll(token, bridge)
+
+	functions.SetLight(l, a, token, bridge)
 }
