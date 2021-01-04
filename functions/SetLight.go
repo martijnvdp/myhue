@@ -4,7 +4,7 @@ import (
 	"github.com/amimof/huego"
 )
 
-//GetAll get lights from hue bridge
+//SetLight state on or off and brightness level
 func SetLight(n *int, a *bool, br *int, token string, b *huego.Bridge) (err string) {
 
 	light, _ := b.GetLight(*n)
