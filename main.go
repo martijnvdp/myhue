@@ -9,14 +9,18 @@ import (
 )
 
 func main() {
-	l := flag.Int("light", 1, "an int")
+	l := flag.Int("light", 0, "an int")
+	list := flag.Bool("list", false, "list all lights")
 	a := flag.Bool("on", false, "a bool")
 	flag.Parse()
 	token, bridge := functions.ConnectHUE()
 	if os.Getenv("HUETOKEN") == "" {
 		fmt.Println("set ENV HUETOKEN=", token)
 	}
-	functions.ListAll(token, bridge)
-
-	functions.SetLight(l, a, token, bridge)
+	if *list {
+		functions.ListAll(token, bridge)
+	}
+	if *l != 0 {
+		functions.SetLight(l, a, token, bridge)
+	}
 }
