@@ -15,7 +15,6 @@ func ListAll(token string, b *huego.Bridge) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("Found %d lights", len(l))
 	for _, lights := range l {
 		fmt.Println("[")
 		fmt.Println("Name:        : ", lights.Name)
@@ -27,4 +26,6 @@ func ListAll(token string, b *huego.Bridge) {
 		fmt.Println("]")
 
 	}
+	fmt.Printf("Found %d lights", len(l))
+
 }
