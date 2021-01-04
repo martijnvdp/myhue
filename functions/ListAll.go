@@ -17,7 +17,14 @@ func ListAll(token string, b *huego.Bridge) {
 	}
 	fmt.Printf("Found %d lights", len(l))
 	for _, lights := range l {
-		fmt.Println("%l", lights.Name)
-		fmt.Println("%l", lights.State)
+		fmt.Println("[")
+		fmt.Println("Name:        : ", lights.Name)
+		fmt.Println("ID:          : ", lights.ID)
+		fmt.Println("ModelID      : ", lights.ModelID)
+		fmt.Println("On           : ", lights.State.On)
+		fmt.Println("Bright level : ", lights.State.Bri)
+		fmt.Println("Reachable    : ", lights.State.Reachable)
+		fmt.Println("]")
+
 	}
 }
