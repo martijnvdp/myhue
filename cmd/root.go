@@ -33,6 +33,13 @@ var rootCmd = &cobra.Command{
 	Short: "a command line tool to interact with the philips hue bridge api",
 	Long: `A command line tool to interact with the philips hue bridge api. For example:
 
+before first run push the button on the hue bridge before run:
+set the following env vars:
+
+"HUEUSER":"someusername"
+"HUEIP":"1.1.1.1" optional if not set it will searche for the bridge
+"HUETOKEN":"token after first user creation"
+
 list all lights: myhue list.
 turn on light 1 with a brightness level of 55%:
 myhue light 1 on 55.`,
