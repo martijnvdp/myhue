@@ -9,8 +9,8 @@ environment vars
 
 ```
 "HUEUSER":"someusername"
-"HUEIP":"1.1.1.1"
-"HUETOKEN":"token after first user creation"
+"HUEIP":"1.1.1.1" (optional wil search for bridge)
+"HUETOKEN":"token after first user creation" (after first run it will give you a token to set with this var)
 ```
 
 after first run a user token wil be created and displayed for future use \
