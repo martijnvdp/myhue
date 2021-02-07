@@ -18,7 +18,6 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/martijnxd/myhue/functions"
 	"github.com/spf13/cobra"
@@ -36,15 +35,10 @@ MYHue is a cli app to interact with a philips hue bridge.`,
 		if os.Getenv("HUETOKEN") == "" {
 			fmt.Println("set ENV HUETOKEN=", token)
 		}
-		l, err := strconv.Atoi(args[0])
+		l, err := cmd.Flags().GetInt("light")
 		a := false
-		br := 50
-		if args[1] == "on" {
-			a = true
-		}
-		if args[2] != "" {
-			br, err = strconv.Atoi(args[2])
-		}
+		br, err := cmd.Flags().GetInt("bright")
+		a, err = cmd.Flags().GetBool("on")
 		if err == nil {
 			functions.SetLight(&l, &a, &br, token, bridge)
 		}
@@ -52,9 +46,10 @@ MYHue is a cli app to interact with a philips hue bridge.`,
 }
 
 func init() {
+	var l, br int
+	var on bool
 	rootCmd.AddCommand(setCmd)
-
-	setCmd.PersistentFlags().String("light", "l", "light id")
-	setCmd.Flags().String("brightness", "b", "brightness level")
-	setCmd.Flags().BoolP("on", "o", false, "Light on or off")
+	setCmd.Flags().IntVarP(&l, "light", "l", 0, "light id")
+	setCmd.Flags().IntVarP(&br, "bright", "b", 60, "brightness level")
+	setCmd.Flags().BoolVarP(&on, "on", "o", false, "Light on or off")
 }
