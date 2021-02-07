@@ -19,8 +19,8 @@ after first run a user token wil be created and displayed for future use \
 # examples 
 
 ```
-myhue -list
-myhue -light 1 -on
+myhue list
+myhue light 1 on 49 //49 == brightness
 ```
 # build
 build exe: 
