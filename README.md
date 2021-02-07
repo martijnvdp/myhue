@@ -20,8 +20,21 @@ after first run a user token wil be created and displayed for future use \
 
 ```
 myhue list
-myhue light 1 on 49 //49 == brightness
 ```
+myhue set:
+```
+Usage:
+  myhue set [flags]
+
+Flags:
+  -b, --bright int   brightness level (default 60)
+  -h, --help         help for set
+  -l, --light int    light id
+  -o, --on           Light on or off
+
+  myhue set light 1 --on -b 49
+```
+
 # build
 build exe: 
 go build
