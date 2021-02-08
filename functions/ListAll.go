@@ -2,6 +2,8 @@ package functions
 
 import (
 	"fmt"
+	"log"
+	"strings"
 
 	"github.com/amimof/huego"
 )
@@ -11,7 +13,11 @@ func ListAll(token string, b *huego.Bridge) {
 
 	l, err := b.GetLights()
 	if err != nil {
-		panic(err)
+		if strings.Contains(err.Error(), "unauthorized user") {
+			log.Fatal("User not authorized, push button on the hue bridge before run")
+		} else {
+			panic(err)
+		}
 	}
 	for _, lights := range l {
 		fmt.Println("[")
