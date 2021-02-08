@@ -1,7 +1,6 @@
 package functions
 
 import (
-	"bufio"
 	"fmt"
 	"os"
 
@@ -15,9 +14,8 @@ func ConnectHUE() (token string, bridge *huego.Bridge) {
 	user := os.Getenv("HUEUSER")
 	hostip := os.Getenv("HUEIP")
 	if user == "" {
-		reader := bufio.NewReader(os.Stdin)
 		fmt.Print("No HUEUSER env set, enter username: ")
-		user, _ = reader.ReadString('\n')
+		fmt.Scanln(&user)
 	}
 	if hostip == "" {
 		bridge, _ = huego.Discover()
