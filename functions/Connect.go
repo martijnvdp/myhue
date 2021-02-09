@@ -1,6 +1,7 @@
 package functions
 
 import (
+	"encoding/base64"
 	"fmt"
 	"os"
 
@@ -11,7 +12,11 @@ import (
 //ConnectHUE to HUE and return TOKEN
 func ConnectHUE() (token string, bridge *huego.Bridge) {
 	user := viper.GetString("hueconfig.user")
-	token = viper.GetString("hueconfig.token")
+	token64, err := base64.StdEncoding.DecodeString(viper.GetString("hueconfig.token"))
+	token = string(token64)
+	if err != nil {
+		panic(err)
+	}
 	hostip := viper.GetString("hueconfig.ip")
 	if token == "" {
 		token = os.Getenv("HUE_TOKEN")
@@ -38,7 +43,7 @@ func ConnectHUE() (token string, bridge *huego.Bridge) {
 	if token == "" {
 		token, _ = bridge.CreateUser(user)
 		if token != "" {
-			viper.SetDefault("hueconfig.token", token)
+			viper.SetDefault("hueconfig.token", base64.StdEncoding.EncodeToString([]byte(token)))
 			viper.WriteConfig()
 		}
 	}
