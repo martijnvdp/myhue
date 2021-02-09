@@ -12,13 +12,16 @@ func SetLight(n *int, a *bool, br *int, token string, b *huego.Bridge) (err stri
 
 	light, err2 := b.GetLight(*n)
 	if err2 != nil {
-		if strings.Contains(err2.Error(), "unauthorized user") {
+		switch {
+		case strings.Contains(err2.Error(), "ERROR 3"):
+			log.Fatal("Error, light not available")
+		case strings.Contains(err2.Error(), "unauthorized user"):
 			log.Fatal("User not authorized, push button on the hue bridge before run")
-		} else {
+		default:
 			panic(err2)
 		}
 	}
-	if *a {
+	if *a || (*br != 0) {
 		light.On()
 		brl := uint8(*br)
 		light.Bri(brl)
