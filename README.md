@@ -1,22 +1,18 @@
-# myhue
-Test go to interact with the api of the philips hue 
+# MyHue
+Test go cli app to interact with the api of the philips hue 
+using cobra and viper libs
 
-and learning go 
+Just to Learn go 
 source: 
 https://github.com/amimof/huego
 
-environment vars 
 
-```
-"HUEUSER":"someusername"
-"HUEIP":"1.1.1.1" (optional wil search for bridge)
-"HUETOKEN":"token after first user creation" (after first run it will give you a token to set with this var)
-```
+After first run a user token wil be created and and stored in the config file \
+before the first run you have to press the button on the hue bridge \
 
-after first run a user token wil be created and displayed for future use \
-(before first run press the button on the hue bridge) \
+config file is stored in the homefolder\config.myhue.yaml
 
-# examples 
+## Examples ## 
 
 ```
 myhue list
@@ -33,6 +29,13 @@ Flags:
   -o, --on           Light on or off
 
   myhue set light 1 --on -b 49
+```
+## environment vars ##
+
+```
+"HUE_USER":"someusername"
+"HUE_IP":"1.1.1.1" (optional wil search for bridge)
+"HUE_TOKEN":"token after first user creation" (after first run it will give you a token to set with this var)
 ```
 
 # build
