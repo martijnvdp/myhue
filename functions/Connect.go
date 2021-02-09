@@ -2,7 +2,6 @@ package functions
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/amimof/huego"
 	"github.com/spf13/viper"
@@ -10,12 +9,16 @@ import (
 
 //ConnectHUE to HUE and return TOKEN
 func ConnectHUE() (token string, bridge *huego.Bridge) {
-	token = os.Getenv("HUETOKEN")
-	user := os.Getenv("HUEUSER")
-	hostip := os.Getenv("HUEIP")
+	user := viper.GetString("hueconfig.user")
+	token = viper.GetString("hueconfig.token")
+	hostip := viper.GetString("hueconfig.ip")
 	if user == "" {
 		fmt.Print("No HUEUSER env set, enter username: ")
 		fmt.Scanln(&user)
+		if user != "" {
+			viper.SetDefault("hueconfig.user", user)
+			viper.WriteConfig()
+		}
 	}
 	if hostip == "" {
 		bridge, _ = huego.Discover()
@@ -29,12 +32,11 @@ func ConnectHUE() (token string, bridge *huego.Bridge) {
 	}
 	if token == "" {
 		token, _ = bridge.CreateUser(user)
-		fmt.Println("token for user: ", user)
-		fmt.Println("token: ", token)
+		if token != "" {
+			viper.SetDefault("hueconfig.token", token)
+			viper.WriteConfig()
+		}
 	}
 	bridge.Login(token)
-	viper.SetDefault("token", token)
-	viper.SetDefault("user", user)
-	viper.SafeWriteConfig()
 	return token, bridge
 }

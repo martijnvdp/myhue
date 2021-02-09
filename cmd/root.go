@@ -18,12 +18,19 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 
 	"github.com/spf13/viper"
 )
+
+type Hueconfig struct {
+	USER  string `mapstructure:"USER"`
+	TOKEN string `mapstructure:"TOKEN"`
+	IP    string `mapstructure:"IP"`
+}
 
 var cfgFile string
 
@@ -36,9 +43,9 @@ var rootCmd = &cobra.Command{
 before first run push the button on the hue bridge before run:
 set the following env vars:
 
-"HUEUSER":"someusername"
-"HUEIP":"1.1.1.1" optional if not set it will searche for the bridge
-"HUETOKEN":"token after first user creation"
+"MYHUE_USER":"someusername"
+"MYHUE_IP":"1.1.1.1" optional if not set it will searche for the bridge
+"MYHUE_TOKEN":"token after first user creation"
 
 list all lights: myhue list.
 turn on light 1 with a brightness level of 55%:
@@ -68,6 +75,7 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
+	var hueconfig Hueconfig
 	if cfgFile != "" {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
@@ -78,16 +86,26 @@ func initConfig() {
 			fmt.Println(err)
 			os.Exit(1)
 		}
-
-		// Search config in home directory with name ".myhue" (without extension).
+		configName := "config.myhue"
+		configType := "yml"
 		viper.AddConfigPath(home)
-		viper.SetConfigName(".myhue")
+		viper.SetConfigName(configName)
+		viper.SetConfigType(configType)
+		cfgFile = filepath.Join(home, configName+"."+configType)
 	}
-
-	viper.AutomaticEnv() // read in environment variables that match
-
-	// If a config file is found, read it in.
+	viper.SetEnvPrefix("MYHUE_") //not working
+	viper.AllowEmptyEnv(true)
+	viper.AutomaticEnv()
+	viper.Unmarshal(&hueconfig)
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
+	} else {
+		_, err := os.Stat(cfgFile)
+		if !os.IsExist(err) {
+			if _, err := os.Create(cfgFile); err != nil {
+			}
+		}
+		if err := viper.SafeWriteConfig(); err != nil {
+		}
 	}
 }
