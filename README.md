@@ -16,7 +16,7 @@ myhue set -l 1 -b 50
 After first run a user token wil be created and and stored in the config file \
 before the first run you have to press the button on the hue bridge 
 
-config file is stored in ###home\config.myhue.yaml###
+config file is stored in: **home\config.myhue.yaml**
 
 ## Examples ## 
 
