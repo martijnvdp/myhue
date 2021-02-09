@@ -21,9 +21,9 @@ func SetLight(n *int, a *bool, br *int, token string, b *huego.Bridge) (err stri
 			panic(err2)
 		}
 	}
-	if *a || (*br != 0) {
+	brl := uint8(*br)
+	if *a == true || *br != 0 {
 		light.On()
-		brl := uint8(*br)
 		light.Bri(brl)
 	} else {
 		light.Off()
