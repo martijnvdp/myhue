@@ -1,6 +1,9 @@
 package functions
 
 import (
+	"log"
+	"strings"
+
 	"github.com/amimof/huego"
 )
 
@@ -9,7 +12,11 @@ func SetLight(n *int, a *bool, br *int, token string, b *huego.Bridge) (err stri
 
 	light, err2 := b.GetLight(*n)
 	if err2 != nil {
-		panic(err2)
+		if strings.Contains(err2.Error(), "unauthorized user") {
+			log.Fatal("User not authorized, push button on the hue bridge before run")
+		} else {
+			panic(err2)
+		}
 	}
 	if *a {
 		light.On()

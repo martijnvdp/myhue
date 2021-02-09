@@ -1,2 +1,3 @@
 myhue.exe
-.vscode/launch.json
+**.vscode/**
+myhue

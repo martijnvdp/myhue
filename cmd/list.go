@@ -16,9 +16,6 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
-	"os"
-
 	"github.com/martijnxd/myhue/functions"
 	"github.com/spf13/cobra"
 )
@@ -32,11 +29,7 @@ var listCmd = &cobra.Command{
 MYHue is a cli app to interact with a philips hue bridge.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		token, bridge := functions.ConnectHUE()
-		if os.Getenv("HUETOKEN") == "" {
-			fmt.Println("set ENV HUETOKEN=", token)
-		}
 		functions.ListAll(token, bridge)
-
 	},
 }
 
