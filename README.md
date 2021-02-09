@@ -41,7 +41,11 @@ Flags:
 # build
 build exe: 
 go build
+
 # refs
+```
 https://github.com/amimof/huego
-\
-https://golang.org/
+https://golang.org
+https://github.com/spf13/cobra
+https://github.com/spf13/viper
+```
