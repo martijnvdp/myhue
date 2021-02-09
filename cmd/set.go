@@ -30,9 +30,8 @@ MYHue is a cli app to interact with a philips hue bridge.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		token, bridge := functions.ConnectHUE()
 		l, err := cmd.Flags().GetInt("light")
-		a := false
 		br, err := cmd.Flags().GetInt("bright")
-		a, err = cmd.Flags().GetBool("on")
+		a, err := cmd.Flags().GetBool("on")
 		if err == nil {
 			functions.SetLight(&l, &a, &br, token, bridge)
 		}
@@ -44,6 +43,6 @@ func init() {
 	var on bool
 	rootCmd.AddCommand(setCmd)
 	setCmd.Flags().IntVarP(&l, "light", "l", 0, "light id")
-	setCmd.Flags().IntVarP(&br, "bright", "b", 60, "brightness level")
+	setCmd.Flags().IntVarP(&br, "bright", "b", 0, "brightness level")
 	setCmd.Flags().BoolVarP(&on, "on", "o", false, "Light on or off")
 }
