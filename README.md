@@ -6,11 +6,17 @@ Just to Learn go
 source: 
 https://github.com/amimof/huego
 
+## Usage ##
+```
+myhue list
 
+myhue set -l 1 -b 50
+
+```
 After first run a user token wil be created and and stored in the config file \
 before the first run you have to press the button on the hue bridge 
 
-config file is stored in the homefolder\config.myhue.yaml
+config file is stored in ###home\config.myhue.yaml###
 
 ## Examples ## 
 
@@ -28,7 +34,8 @@ Flags:
   -l, --light int    light id
   -o, --on           Light on or off
 
-  myhue set light 1 --on -b 49
+  myhue set light 1 --on -b 49var a bool
+		
 ```
 ## environment vars ##
 
