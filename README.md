@@ -23,7 +23,7 @@ Usage:
   myhue set [flags]
 
 Flags:
-  -b, --bright int   brightness level (default 60)
+  -b, --bright int   brightness level
   -h, --help         help for set
   -l, --light int    light id
   -o, --on           Light on or off
