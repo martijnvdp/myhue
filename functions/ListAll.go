@@ -41,11 +41,17 @@ func ListAll(r, w bool, f, token string, b *huego.Bridge) {
 				})
 			}
 		}
-		if !r {
+		if !r && f == "" {
 			list = append(list, lights{
 				ID: ll.ID, NAME: ll.Name, ModelID: ll.ModelID, On: ll.State.On, Bright: ll.State.Bri, Reachable: ll.State.Reachable,
 			})
 		}
+		if !r && f != "" && strings.Contains(ll.Name, f) {
+			list = append(list, lights{
+				ID: ll.ID, NAME: ll.Name, ModelID: ll.ModelID, On: ll.State.On, Bright: ll.State.Bri, Reachable: ll.State.Reachable,
+			})
+		}
+
 	}
 	if w {
 		fmt.Println("Name - ID - Model - State - Reachable")
