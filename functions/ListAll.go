@@ -18,7 +18,7 @@ type lights struct {
 }
 
 //ListAll lights
-func ListAll(r, w bool, token string, b *huego.Bridge) {
+func ListAll(r, w bool, f, token string, b *huego.Bridge) {
 	var list []lights
 	l, err := b.GetLights()
 	if err != nil {
@@ -30,16 +30,28 @@ func ListAll(r, w bool, token string, b *huego.Bridge) {
 	}
 	for _, ll := range l {
 		if r && ll.State.Reachable {
+			if f != "" && strings.Contains(ll.Name, f) {
+				list = append(list, lights{
+					ID: ll.ID, NAME: ll.Name, ModelID: ll.ModelID, On: ll.State.On, Bright: ll.State.Bri, Reachable: ll.State.Reachable,
+				})
+			}
+			if f == "" {
+				list = append(list, lights{
+					ID: ll.ID, NAME: ll.Name, ModelID: ll.ModelID, On: ll.State.On, Bright: ll.State.Bri, Reachable: ll.State.Reachable,
+				})
+			}
+		}
+		if !r && f == "" {
 			list = append(list, lights{
 				ID: ll.ID, NAME: ll.Name, ModelID: ll.ModelID, On: ll.State.On, Bright: ll.State.Bri, Reachable: ll.State.Reachable,
 			})
-			continue
 		}
-		if !r {
+		if !r && f != "" && strings.Contains(ll.Name, f) {
 			list = append(list, lights{
 				ID: ll.ID, NAME: ll.Name, ModelID: ll.ModelID, On: ll.State.On, Bright: ll.State.Bri, Reachable: ll.State.Reachable,
 			})
 		}
+
 	}
 	if w {
 		fmt.Println("Name - ID - Model - State - Reachable")
@@ -56,4 +68,6 @@ func ListAll(r, w bool, token string, b *huego.Bridge) {
 			fmt.Println("-----")
 		}
 	}
+	fmt.Printf("Found %d lights", len(list))
+	fmt.Println("")
 }

@@ -40,16 +40,24 @@ var rootCmd = &cobra.Command{
 	Short: "a command line tool to interact with the philips hue bridge api",
 	Long: `A command line tool to interact with the philips hue bridge api. For example:
 
-before first run push the button on the hue bridge before run:
-set the following env vars:
+Before first run push the button on the hue bridge
+Token and username will be stored in the config file
+default: $HOME:\config.myhue.yml
+
+The following env vars can be used:
 
 "MYHUE_USER":"someusername"
 "MYHUE_IP":"1.1.1.1" optional if not set it will searche for the bridge
 "MYHUE_TOKEN":"token after first user creation"
 
-list all lights: myhue list.
+examples:
+ 
+list lights:
+ myhue list
+ myhue list -w -r 
+
 turn on light 1 with a brightness level of 55%:
-myhue light 1 on 55.`,
+myhue set light 1 --on -b 55.`,
 }
 
 func Execute() {
