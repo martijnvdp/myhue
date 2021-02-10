@@ -23,9 +23,9 @@ import (
 // setCmd represents the set command
 var setCmd = &cobra.Command{
 	Use:   "set",
-	Short: "set light 0 on 49",
+	Short: "set --light 1 --on -br 49",
 	Long: `Set light on/off and specify brightness. For example:
-	myhue set light 0 on 49 ,turn light 0 on with a brightness level of 49
+	myhue set --light 1 --on -br 49 ,turn light 0 on with a brightness level of 49
 MYHue is a cli app to interact with a philips hue bridge.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		token, bridge := functions.ConnectHUE()

@@ -25,9 +25,9 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "list all lights",
 	Long: `myhue list lights
-	  -w wide
+	  -w width
 	  -r only reachable
-	  -f "nametofilter" filter name 
+	  -f "name" filter name 
 
 	  examples:
 	  myhue list -w
@@ -36,7 +36,7 @@ var listCmd = &cobra.Command{
 MYHue is a cli app to interact with a philips hue bridge.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		token, bridge := functions.ConnectHUE()
-		w, _ := cmd.Flags().GetBool("wide")
+		w, _ := cmd.Flags().GetBool("width")
 		r, _ := cmd.Flags().GetBool("reachable")
 		f, _ := cmd.Flags().GetString("filter")
 		functions.ListAll(r, w, f, token, bridge)
@@ -48,7 +48,7 @@ func init() {
 	var f string
 	rootCmd.AddCommand(listCmd)
 
-	listCmd.Flags().BoolVarP(&w, "wide", "w", false, "wide list")
+	listCmd.Flags().BoolVarP(&w, "width", "w", false, "width list")
 	listCmd.Flags().BoolVarP(&r, "reachable", "r", false, "display reachable lights only")
-	listCmd.Flags().StringVarP(&f, "filter", "f", "", "filter name")
+	listCmd.Flags().StringVarP(&f, "filter", "f", "", "specify keyword to filter name")
 }

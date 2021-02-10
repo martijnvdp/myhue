@@ -7,11 +7,29 @@ source:
 https://github.com/amimof/huego
 
 ## Usage ##
+
+List lights:
 ```
-myhue list
+Usage:
+  myhue list [flags]
 
-myhue set -l 1 -b 50
+Flags:
+  -f, --filter string   specify keyword to filter name
+  -h, --help            help for list
+  -r, --reachable       display reachable lights only
+  -w, --width           width list
+```
 
+set light 
+```
+Usage:
+  myhue set [flags]
+
+Flags:
+  -b, --bright int   brightness level
+  -h, --help         help for set
+  -l, --light int    light id
+  -o, --on           Light on or off
 ```
 After first run a user token wil be created and and stored in the config file \
 before the first run you have to press the button on the hue bridge 
@@ -22,20 +40,13 @@ config file is stored in: **home\config.myhue.yaml**
 
 ```
 myhue list
-```
-myhue set:
-```
-Usage:
-  myhue set [flags]
+myhue list --width
+myhue list -w --reachable --filter "name"
 
-Flags:
-  -b, --bright int   brightness level
-  -h, --help         help for set
-  -l, --light int    light id
-  -o, --on           Light on or off
+myhue set --light 1 --on
+myhue set -l 1 --on -br 60
+myhue set -l 1 
 
-  myhue set light 1 --on -b 49var a bool
-		
 ```
 ## environment vars ##
 
