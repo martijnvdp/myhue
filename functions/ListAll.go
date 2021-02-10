@@ -56,4 +56,6 @@ func ListAll(r, w bool, token string, b *huego.Bridge) {
 			fmt.Println("-----")
 		}
 	}
+	fmt.Printf("Found %d lights", len(list))
+	fmt.Println("")
 }
