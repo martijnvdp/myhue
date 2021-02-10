@@ -8,9 +8,18 @@ import (
 	"github.com/amimof/huego"
 )
 
-//ListAll lights
-func ListAll(token string, b *huego.Bridge) {
+type lights struct {
+	NAME      string `mapstructure:"NAME"`
+	ID        int    `mapstructure:"ID"`
+	ModelID   string `mapstructure:"ModelID"`
+	On        bool   `mapstructure:"On"`
+	Bright    uint8  `mapstructure:"Bright"`
+	Reachable bool   `mapstructure:"Reachable"`
+}
 
+//ListAll lights
+func ListAll(r, w bool, token string, b *huego.Bridge) {
+	var list []lights
 	l, err := b.GetLights()
 	if err != nil {
 		if strings.Contains(err.Error(), "unauthorized user") {
@@ -19,15 +28,32 @@ func ListAll(token string, b *huego.Bridge) {
 			panic(err)
 		}
 	}
-	for _, lights := range l {
-		fmt.Println("[")
-		fmt.Println("Name:        : ", lights.Name)
-		fmt.Println("ID:          : ", lights.ID)
-		fmt.Println("ModelID      : ", lights.ModelID)
-		fmt.Println("On           : ", lights.State.On)
-		fmt.Println("Bright level : ", lights.State.Bri)
-		fmt.Println("Reachable    : ", lights.State.Reachable)
-		fmt.Println("]")
+	for _, ll := range l {
+		if r && ll.State.Reachable {
+			list = append(list, lights{
+				ID: ll.ID, NAME: ll.Name, ModelID: ll.ModelID, On: ll.State.On, Bright: ll.State.Bri, Reachable: ll.State.Reachable,
+			})
+			continue
+		}
+		if !r {
+			list = append(list, lights{
+				ID: ll.ID, NAME: ll.Name, ModelID: ll.ModelID, On: ll.State.On, Bright: ll.State.Bri, Reachable: ll.State.Reachable,
+			})
+		}
 	}
-	fmt.Printf("Found %d lights", len(l))
+	if w {
+		fmt.Println("Name - ID - Model - State - Reachable")
+	}
+	for _, ll := range list {
+		if w {
+			fmt.Println(ll.NAME, " | ", ll.ID, " | ", ll.ModelID, " | ", ll.On, " | ", ll.Reachable)
+		} else {
+			fmt.Println("Name      : ", ll.NAME)
+			fmt.Println("ID        : ", ll.ID)
+			fmt.Println("Model     : ", ll.ModelID)
+			fmt.Println("State     : ", ll.On)
+			fmt.Println("Reachable : ", ll.Reachable)
+			fmt.Println("-----")
+		}
+	}
 }

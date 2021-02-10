@@ -29,20 +29,18 @@ var listCmd = &cobra.Command{
 MYHue is a cli app to interact with a philips hue bridge.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		token, bridge := functions.ConnectHUE()
-		functions.ListAll(token, bridge)
+		w, _ := cmd.Flags().GetBool("wide")
+		r, _ := cmd.Flags().GetBool("reachable")
+
+		functions.ListAll(r, w, token, bridge)
 	},
 }
 
 func init() {
+	var w, r bool
 	rootCmd.AddCommand(listCmd)
 
-	// Here you will define your flags and configuration settings.
+	listCmd.Flags().BoolVarP(&w, "wide", "w", false, "wide list")
+	listCmd.Flags().BoolVarP(&r, "reachable", "r", false, "display reachable lights only")
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// listCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
