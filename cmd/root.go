@@ -57,7 +57,7 @@ list lights:
  myhue list -w -r 
 
 turn on light 1 with a brightness level of 55%:
-myhue set light 1 --on -b 55.`,
+myhue set --light 1 --on -b 55.`,
 }
 
 func Execute() {

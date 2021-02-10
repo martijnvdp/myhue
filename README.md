@@ -19,8 +19,13 @@ after first run a user token wil be created and displayed for future use \
 # examples 
 
 ```
-myhue -list
-myhue -light 1 -on
+myhue list
+myhue list --width
+myhue list -w --reachable --filter "name"
+
+myhue set --light 1 --on
+myhue set -l 1 --on -br 60
+myhue set -l 1 
 ```
 # build
 build exe: 
